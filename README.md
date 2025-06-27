@@ -1,27 +1,31 @@
-# 🧪 CSP Validator — Zero Excuses Edition
+# 🧪 CSP Validator & Magento Builder — Zero Excuses Edition
 
-A PyQt6-powered desktop app that validates Customer Specific Pricing (CSP) updates from suppliers against your Magento CSP export. Built for speed, clarity, and zero manual work.
+A PyQt6-powered desktop application to validate Customer Specific Pricing (CSP) updates and generate Magento import-ready files. Designed for maximum speed, clarity, and zero manual intervention.
 
 ---
 
 ## 🚀 Features
 
-- Load Magento CSP file (`.xlsx`)
-- Load Supplier CSP update file (flexible headers)
-- Column mapping for SKU, Price, and Rebate
-- Handles:
+- Load Magento CSP export file (`.xlsx`) with fixed headers
+- Load flexible-format Supplier CSP update file
+- Map Supplier columns dynamically: SKU, Price, Rebate, and Customer Group
+- Validation output:
   - ✅ No Change
   - 🔁 Updated Existing
-  - 🆕 New Additions
-  - 📉 Disabled (missing in supplier file)
-- Normalizes rebate format (e.g., 0.1 → 10%)
-- Exports summary and categorized sheets to Excel
-- Logs everything in real-time
-- Runs in dark mode for retinal sanity
+  - 🆕 New
+  - 📉 Disabled
+- Automatic normalization of % rebate formats
+- Export validation report to Excel (`Summary`, `No Change`, `Disabled`, `Updated Existing`, `New`)
+- Generate Magento import-ready Excel file with:
+  - `Disabled_Profile`
+  - `Updated_Profile`
+  - `New_Profile`
+- Real-time verbose logging to GUI
+- Dark mode enabled
 
 ---
 
-## 📦 Installation
+## 🛠 Installation
 
 ### 1. Clone the Repo
 ```bash
@@ -38,46 +42,65 @@ pip install -r requirements.txt
 
 ---
 
-## 🛠 Build Executable
+## 🏗 Build Executable
 
-To create a standalone `.exe`:
-
+Compile into a standalone `.exe`:
 ```bash
 .\.venv\Scripts\pyinstaller.exe --noconfirm --onefile --windowed --clean --name "CSP_Validator" main.py
 ```
 
-Output: `./dist/CSP_Validator.exe`
+Result: `./dist/CSP_Validator.exe`
 
 ---
 
-## 📂 Output
+## 🧠 How to Use
 
-On run, the tool saves an Excel report in your **Documents** folder:
+### Part 1: Validate Pricing
+1. **Launch the app**
+2. **Load Magento CSP export** (with fixed headers)
+3. **Load Supplier CSP update file**
+4. **Map**:
+   - SKU → part number
+   - Price → fixed or contract price
+   - Rebate → % off
+   - Customer Group → customer tier/group
+5. **Click Run Validation**
+6. Output Excel saved in your Documents folder (`CSP_Validation_YYYYMMDD_HHMMSS.xlsx`)
+
+### Part 2: Generate Magento Files
+1. After validation completes, click **Generate Magento Upload Files**
+2. Output file (`Magento_Upload_YYYYMMDD_HHMMSS.xlsx`) will contain:
+   - `Disabled_Profile`
+   - `Updated_Profile`
+   - `New_Profile`
+
+---
+
+## 📄 Magento Required Columns
+
+Magento CSP file must contain:
 ```
-C:\Users\<You>\Documents\CSP_Validation_YYYYMMDD_HHMMSS.xlsx
+SupplierPartnumber | fixedprice | Rebate | CustomerGroup
 ```
 
-Sheets:
-- `Summary`
-- `No Change`
-- `Updated Existing`
-- `Disabled`
-- `New`
+---
+
+## 📂 Output Location
+
+All `.xlsx` output files are saved in:
+```
+C:\Users\<YourUsername>\Documents\
+```
 
 ---
 
-## ❓ How to Use
+## 📜 License
 
-1. **Launch the app** (via script or `CSP_Validator.exe`)
-2. **Load Files**  
-   - Load Magento file (exported `.xlsx` with fixed headers)  
-   - Load Supplier file (update file with dynamic headers)
-3. **Map Columns**  
-   - SKU → supplier’s part number column  
-   - Price → supplier’s contract/fixed price column  
-   - Rebate → % rebate or markdown column
-4. **Run Validation**
-5. **Get Output** in your Documents folder
+MIT — Automate or die trying.
 
 ---
 
+## 👨‍💻 Author
+
+**Joshua Taitt**  
+Automation Specialist @ Neta Scientific
